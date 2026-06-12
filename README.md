@@ -1,9 +1,10 @@
 # Reto Gapsi - Monorepo Playwright
 
-Este repositorio contiene dos retos de automatizacion con Playwright y TypeScript:
+Este repositorio contiene tres retos de automatizacion:
 
 - `aplicacion-api`: automatizacion del endpoint de asignacion de pedidos.
 - `aplicacion-web`: automatizacion Web UI del login del Centro de Control.
+- `aplicacion-mobile`: automatizacion mobile PickApp con Maestro Framework.
 
 ## Clonar el repositorio
 
@@ -39,10 +40,37 @@ El comando `npm run ci` ejecuta:
 - validacion TypeScript con `npm run typecheck`
 - pruebas Web UI con `npm run test:ci`
 
+## Ejecutar pruebas Mobile
+
+```bash
+cd aplicacion-mobile
+maestro test .
+```
+
+En PowerShell se recomienda desactivar analiticas de Maestro para evitar bloqueos por red:
+
+```powershell
+$env:MAESTRO_CLI_NO_ANALYTICS="true"
+maestro test .
+```
+
+Ejecutar un flujo especifico:
+
+```bash
+maestro test flows/01-happy-path-generar-guia.yaml
+```
+
+Generar reporte HTML:
+
+```bash
+maestro test . --format=html --output=reports/mobile-report.html
+```
+
 ## Documentacion de diseno
 
 - API: `aplicacion-api/docs/diseno-automatizacion-api.md`
 - Web UI: `aplicacion-web/docs/diseno-automatizacion-web.md`
+- Mobile: `aplicacion-mobile/docs/diseno-automatizacion-mobile.md`
 
 ## Estrategia CI/CD
 
@@ -50,6 +78,8 @@ Los workflows estan en `.github/workflows`:
 
 - `api-ci-cd.yml`: ejecuta el pipeline del reto API.
 - `web-ci-cd.yml`: ejecuta el pipeline del reto Web UI.
+
+El reto mobile queda preparado para ejecucion local o en un runner con emulador/dispositivo y Maestro instalado. La estrategia mobile esta documentada en `aplicacion-mobile/docs/diseno-automatizacion-mobile.md`.
 
 Cada workflow se dispara en:
 

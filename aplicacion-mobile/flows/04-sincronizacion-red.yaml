@@ -1,0 +1,49 @@
+appId: com.gapsi.pickapp
+name: PickApp - Manejo de sincronizacion
+tags:
+  - mobile
+  - sync
+  - resilience
+---
+- launchApp:
+    appId: com.gapsi.pickapp
+    clearState: true
+
+- tapOn:
+    id: "login_username_input"
+- inputText: "supervisor.pick"
+- tapOn:
+    id: "login_password_input"
+- inputText: "PickApp123!"
+- tapOn:
+    id: "login_submit_button"
+
+- assertVisible:
+    id: "orders_list_screen"
+- tapOn:
+    id: "order_card_ORD-2025-007841"
+- tapOn:
+    id: "product_card_SKU-001"
+- tapOn:
+    id: "scan_product_button"
+- tapOn:
+    id: "manual_barcode_input"
+- inputText: "SKU-001-BC"
+- tapOn:
+    id: "confirm_manual_barcode_button"
+
+# Simulacion del escenario offline/sincronizacion pendiente.
+- tapOn:
+    id: "simulate_offline_mode_button"
+- tapOn:
+    id: "confirm_preparation_button"
+- assertVisible: "Preparacion pendiente de sincronizacion"
+
+- tapOn:
+    id: "simulate_online_mode_button"
+- tapOn:
+    id: "sync_pending_preparations_button"
+- assertVisible: "Preparacion sincronizada"
+- tapOn:
+    id: "generate_shipping_label_button"
+- assertVisible: "Guia de Envio Generada"

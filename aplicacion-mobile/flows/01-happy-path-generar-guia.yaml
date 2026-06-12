@@ -1,0 +1,61 @@
+appId: com.gapsi.pickapp
+name: PickApp - Happy path generar guia
+tags:
+  - mobile
+  - happy-path
+  - pickapp
+---
+- launchApp:
+    appId: com.gapsi.pickapp
+    clearState: true
+
+- assertVisible: "PickApp"
+- tapOn:
+    id: "login_username_input"
+- inputText: "supervisor.pick"
+- tapOn:
+    id: "login_password_input"
+- inputText: "PickApp123!"
+- tapOn:
+    id: "login_submit_button"
+
+- assertVisible:
+    id: "orders_list_screen"
+- assertVisible: "Lista de Pedidos"
+- tapOn:
+    id: "order_card_ORD-2025-007841"
+
+- assertVisible:
+    id: "order_detail_screen"
+- assertVisible: "Detalle de Productos"
+- assertVisible: "ORD-2025-007841"
+- tapOn:
+    id: "product_card_SKU-001"
+
+- assertVisible:
+    id: "product_detail_screen"
+- assertVisible: "Escanear Producto"
+- tapOn:
+    id: "scan_product_button"
+
+# Simulacion de scanner: en emulador se usa entrada manual controlada.
+- assertVisible:
+    id: "manual_barcode_input"
+- tapOn:
+    id: "manual_barcode_input"
+- inputText: "SKU-001-BC"
+- tapOn:
+    id: "confirm_manual_barcode_button"
+
+- assertVisible: "Producto escaneado"
+- tapOn:
+    id: "confirm_preparation_button"
+
+- assertVisible: "Preparacion confirmada"
+- tapOn:
+    id: "generate_shipping_label_button"
+
+- assertVisible:
+    id: "shipping_label_screen"
+- assertVisible: "Guia de Envio Generada"
+- assertVisible: "ORD-2025-007841"

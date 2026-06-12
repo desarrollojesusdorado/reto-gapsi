@@ -1,0 +1,38 @@
+appId: com.gapsi.pickapp
+name: PickApp - Scanner con entrada manual
+tags:
+  - mobile
+  - scanner
+  - manual-input
+---
+- launchApp:
+    appId: com.gapsi.pickapp
+    clearState: true
+
+- tapOn:
+    id: "login_username_input"
+- inputText: "supervisor.pick"
+- tapOn:
+    id: "login_password_input"
+- inputText: "PickApp123!"
+- tapOn:
+    id: "login_submit_button"
+
+- tapOn:
+    id: "order_card_ORD-2025-007841"
+- tapOn:
+    id: "product_card_SKU-001"
+- tapOn:
+    id: "scan_product_button"
+
+- assertVisible:
+    id: "manual_barcode_input"
+- tapOn:
+    id: "manual_barcode_input"
+- inputText: "SKU-001-BC"
+- tapOn:
+    id: "confirm_manual_barcode_button"
+
+- assertVisible: "Producto escaneado"
+- assertVisible:
+    id: "scan_success_state"

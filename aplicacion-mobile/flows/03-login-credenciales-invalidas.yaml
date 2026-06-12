@@ -1,0 +1,24 @@
+appId: com.gapsi.pickapp
+name: PickApp - Login credenciales invalidas
+tags:
+  - mobile
+  - negative
+  - login
+---
+- launchApp:
+    appId: com.gapsi.pickapp
+    clearState: true
+
+- assertVisible: "PickApp"
+- tapOn:
+    id: "login_username_input"
+- inputText: "usuario.invalido"
+- tapOn:
+    id: "login_password_input"
+- inputText: "PasswordIncorrecto"
+- tapOn:
+    id: "login_submit_button"
+
+- assertVisible: "Usuario o contrasena incorrectos"
+- assertNotVisible:
+    id: "orders_list_screen"
