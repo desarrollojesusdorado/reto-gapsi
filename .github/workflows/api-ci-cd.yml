@@ -1,0 +1,82 @@
+name: CI/CD API
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'aplicacion-api/**'
+      - '.github/workflows/api-ci-cd.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - 'aplicacion-api/**'
+      - '.github/workflows/api-ci-cd.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+    inputs:
+      publish_report:
+        description: 'Publish API Playwright report to GitHub Pages'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: api-report-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-api:
+    name: Run API tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript typecheck
+        run: npm run typecheck -w aplicacion-api
+
+      - name: Run Playwright API tests
+        run: npm run test:ci -w aplicacion-api
+
+      - name: Upload API report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-playwright-report
+          path: aplicacion-api/playwright-report/
+          retention-days: 30
+
+      - name: Publish API report to GitHub Pages
+        if: >
+          always() &&
+          (
+            github.event_name == 'workflow_dispatch' && inputs.publish_report ||
+            github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+          )
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: aplicacion-api/playwright-report
+          destination_dir: api
+          keep_files: true

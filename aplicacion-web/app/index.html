@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Centro de Control</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="login-panel" data-testid="login-panel" aria-labelledby="login-title">
+        <pre aria-hidden="true">┌──────────────────────────────┐
+│   Centro de Control - Login  │
+├──────────────────────────────┤</pre>
+
+        <h1 id="login-title">Centro de Control - Login</h1>
+
+        <form id="login-form" novalidate>
+          <div class="field-row">
+            <label for="username">Usuario:</label>
+            <input
+              id="username"
+              name="username"
+              data-testid="username-input"
+              autocomplete="username"
+            >
+          </div>
+
+          <div class="field-row">
+            <label for="password">Contrasena:</label>
+            <input
+              id="password"
+              name="password"
+              data-testid="password-input"
+              type="password"
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" data-testid="login-button">Entrar</button>
+          <a href="#recover" data-testid="forgot-password-link">¿Olvidaste tu contrasena?</a>
+          <p class="feedback" data-testid="login-feedback" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="landing-panel hidden" data-testid="landing-page" aria-labelledby="landing-title">
+        <h1 id="landing-title">Panel de Control</h1>
+        <p data-testid="welcome-message">Bienvenido, supervisor de operaciones.</p>
+        <dl>
+          <div>
+            <dt>Pedidos pendientes</dt>
+            <dd data-testid="pending-orders">12</dd>
+          </div>
+          <div>
+            <dt>Operadores activos</dt>
+            <dd data-testid="active-operators">8</dd>
+          </div>
+        </dl>
+        <button type="button" data-testid="logout-button">Cerrar sesion</button>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

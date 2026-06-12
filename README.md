@@ -1,6 +1,9 @@
-# Reto Gapsi - Playwright API
+# Reto Gapsi - Monorepo Playwright
 
-Proyecto base para automatizar el endpoint `POST /api/v1/orders/assign` usando Playwright, TypeScript y una arquitectura tipo POM aplicada a API.
+Monorepo con dos soluciones de automatizacion usando Playwright y TypeScript:
+
+- `aplicacion-api`: Ejercicio A, API Testing para asignacion de pedidos.
+- `aplicacion-web`: Ejercicio B, Web UI Automation para el login del Centro de Control.
 
 ## Requisitos
 
@@ -9,46 +12,61 @@ Proyecto base para automatizar el endpoint `POST /api/v1/orders/assign` usando P
 
 ## Instalacion
 
+Desde la raiz del repositorio:
+
 ```bash
 npm install
 ```
 
-Configura las variables de entorno si vas a probar contra un servicio real:
+## Comandos
+
+Ejecutar todo:
 
 ```bash
-copy .env.example .env
+npm run ci
 ```
 
-Actualiza `BASE_URL` y `API_TOKEN` con los valores reales del ambiente.
-
-Las pruebas incluidas levantan un servidor mock local para simular el endpoint del reto, por lo que pueden ejecutarse sin depender de un ambiente externo.
-
-## Ejecucion
-
-```bash
-npm test
-```
-
-Solo pruebas API:
+Ejecutar solo API:
 
 ```bash
 npm run test:api
 ```
 
-Reporte HTML:
+Ejecutar solo Web UI:
 
 ```bash
-npm run report
+npm run test:web
 ```
+
+Validar TypeScript en ambos proyectos:
+
+```bash
+npm run typecheck
+```
+
+## Documentacion
+
+- API: `aplicacion-api/docs/diseno-automatizacion-api.md`
+- Web UI: `aplicacion-web/docs/diseno-automatizacion-web.md`
 
 ## CI/CD
 
-El workflow `.github/workflows/ci-cd.yml` ejecuta:
+Los workflows estan en `.github/workflows`:
 
-- instalacion con `npm ci`
-- validacion TypeScript con `npm run typecheck`
-- pruebas API con `npm run test:ci`
-- carga del reporte como artifact
-- publicacion del reporte HTML en GitHub Pages
+- `api-ci-cd.yml`: ejecuta y publica el reporte del reto API.
+- `web-ci-cd.yml`: ejecuta y publica el reporte del reto Web UI.
 
-La accion se ejecuta en `push`, `pull_request` y manualmente desde `workflow_dispatch`. Para usar GitHub Pages, configura el repositorio en `Settings > Pages > Source > GitHub Actions`.
+Ambos workflows soportan ejecucion manual con `workflow_dispatch`.
+
+## Reportes en GitHub Pages
+
+La estrategia de reportes usa la rama `gh-pages` con carpetas separadas:
+
+- Reporte API: `/api`
+- Reporte Web UI: `/web`
+
+Configura GitHub Pages en el repositorio con:
+
+- Source: `Deploy from a branch`
+- Branch: `gh-pages`
+- Folder: `/root`

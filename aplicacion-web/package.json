@@ -1,0 +1,20 @@
+{
+  "name": "aplicacion-web",
+  "version": "1.0.0",
+  "description": "Automatizacion Web UI del Centro de Control con Playwright, TypeScript y POM.",
+  "private": true,
+  "scripts": {
+    "ci": "npm run typecheck && npm run test:ci",
+    "serve": "node scripts/staticServer.js",
+    "test": "playwright test",
+    "test:ci": "playwright test tests/ui",
+    "test:headed": "playwright test --headed",
+    "typecheck": "tsc --noEmit",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  }
+}
